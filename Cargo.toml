@@ -1,0 +1,15 @@
+[package]
+name = "nitroshot"
+version = "0.1.0"
+authors = ["samyak-jain <samtan106@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+gtk = "^0.9.0"
+relm = "^0.21.0"
+relm-derive = "^0.21.0"
+glib = "^0.10.0"
+gio = "^0.9.0"
+gdk-pixbuf = "^0.9.0"
