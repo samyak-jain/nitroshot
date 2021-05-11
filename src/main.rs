@@ -1,13 +1,14 @@
 use gtk::prelude::*;
+use gtk::Align;
 use gtk::Inhibit;
 use gtk::Orientation::{Horizontal, Vertical};
-use gtk::Align;
 use relm::Widget;
 use relm_derive::widget;
-use glib::Bytes;
 use relm_derive::Msg;
-use gio::{Cancellable, MemoryInputStream};
-use gdk_pixbuf::Pixbuf;
+
+mod components;
+use components::image::generate_image;
+use components::image::Icon;
 
 pub struct Model {
     counter: u32,
@@ -20,27 +21,6 @@ pub enum Msg {
     Quit,
 }
 
-static SELECTION: &[u8] = include_bytes!("../assets/selection.png");
-static SCREEN: &[u8] = include_bytes!("../assets/screen.png");
-static WINDOW: &[u8] = include_bytes!("../assets/window.png");
-
-enum Icon {
-    Selection,
-    Screen,
-    Window,
-}
-
-fn generate_image(icon_type: Icon) -> gtk::Image {
-    let bytes = match icon_type {
-        Icon::Selection => Bytes::from_static(SELECTION),
-        Icon::Screen => Bytes::from_static(SCREEN),
-        Icon::Window => Bytes::from_static(WINDOW),
-    };
-    let data_stream = MemoryInputStream::from_bytes(&bytes);
-    let pixbuf = Pixbuf::from_stream(&data_stream, None as Option<&Cancellable>).unwrap();
-    let image = gtk::Image::from_pixbuf(Some(&pixbuf));
-    image
-}
 
 #[widget]
 impl Widget for Win {
@@ -50,8 +30,6 @@ impl Widget for Win {
 
     fn update(&mut self, event: Msg) {
         match event {
-            // A call to self.label1.set_text() is automatically inserted by the
-            // attribute every time the model.counter attribute is updated.
             Msg::Decrement => self.model.counter -= 1,
             Msg::Increment => self.model.counter += 1,
             Msg::Quit => gtk::main_quit(),
