@@ -13,8 +13,7 @@ use components::image::generate_image;
 use components::image::Icon;
 
 pub struct Model {
-    counter: u32,
-    selection: String,
+    counter: u32,    selection: String,
     active_state: Activity,
     relm: Relm<Win>,
     selection_handle: Option<SignalHandlerId>,
@@ -33,6 +32,7 @@ pub enum Activity {
 #[derive(Msg)]
 pub enum Msg {
     Screenshot,
+    Selection,
     SelectionActive,
     ScreenActive,
     WindowActive,
@@ -147,24 +147,25 @@ impl Widget for Win {
                     }
                 };
             }
+            Msg::Selection => {
+                let result = launch_default(None, false);
+                // self.widgets.main_window.show();
+                match result {
+                    Ok(selection) => {
+                        self.model.selection = selection;
+                    }
+                    Err(err) => {
+                        println!("{}", err);
+                    }
+                };
+
+                self.widgets.selection.set_active(false);
+            }
             Msg::Screenshot => {
                 match self.model.active_state {
                     Activity::Selection => {
-                        // gtk_sys::gtk_widget_hide(self.widgets.main_window);
-                        self.widgets.main_window.hide();
-                        // self.widgets.main_window.iconify();
-                        let result = launch_default(None, false);
-                        self.widgets.main_window.show();
-                        match result {
-                            Ok(selection) => {
-                                self.model.selection = selection;
-                            }
-                            Err(err) => {
-                                println!("{}", err);
-                            }
-                        };
-
-                        self.widgets.selection.set_active(false);
+                        self.widgets.main_window.get_toplevel().unwrap().hide();
+                        self.model.relm.stream().emit(Msg::Selection);
                     }
                     _ => (),
                 };
