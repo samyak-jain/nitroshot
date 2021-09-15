@@ -17,7 +17,9 @@ fn main() {
 
         if let Some(strong_window) = weak_window.upgrade() {
             strong_window.hide();
-            select_screen();
+            let res = select_screen();
+
+            println!("Selected area: {}", res);
 
             strong_window.show();
         }

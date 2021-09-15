@@ -1,5 +1,5 @@
 import { SpinBox, Button, CheckBox, Slider, GroupBox } from "sixtyfps_widgets.60";
-import { PushButton } from "./button.60";
+import { PushButton } from "./components/main_button.60";
 export MainWindow := Window {
     callback start-recording(int, int);
     callback take-screenshot(int, int);
@@ -49,7 +49,6 @@ export MainWindow := Window {
             PushButton {
                 vertical-padding: 10px;
                 text: "Selection";
-                create_img: true;
                 icon: @image-url("./icons/selection.svg");
                 pushcolor: white;
                 selected: selection-selected;
@@ -71,7 +70,6 @@ export MainWindow := Window {
             PushButton {
                 vertical-padding: 10px;
                 text: "Screen";
-                create_img: true;
                 icon: @image-url("./icons/screen.svg");
                 pushcolor: white;
                 selected: screen-selected;
@@ -93,7 +91,6 @@ export MainWindow := Window {
             PushButton {
                 vertical-padding: 10px;
                 text: "Window";
-                create_img: true;
                 icon: @image-url("./icons/window.svg");
                 pushcolor: white;
                 selected: window-selected;

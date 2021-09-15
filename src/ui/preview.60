@@ -1,0 +1,63 @@
+import { PushButton } from "./components/preview_button.60";
+
+PreviewImage := Image {
+    horizontal-stretch: 2;
+}
+
+PreviewButtonSave := PushButton {
+    callback save-image;
+
+    text: "Save Image";
+    pushcolor: white;
+    pressed_color: #3498DB;
+    base_color: #22A7F0;
+    clicked => { root.save-image() }
+}
+
+
+PreviewButtonCopy := PushButton {
+    callback copy-image;
+
+    text: "Copy to Clipboard";
+    pushcolor: white;
+    pressed_color: #3498DB;
+    base_color: #22A7F0;
+    clicked => { root.copy-image() }
+}
+
+export preview := Rectangle {
+    property <image> preview: @image-url("./placeholder/preview.png");
+    property <bool> landscape: true;
+    callback save-image;
+    callback copy-image;
+    
+    if landscape : VerticalLayout {
+        PreviewImage {
+            source: preview;
+        }
+
+        HorizontalLayout {
+            padding: 30px;
+            spacing: 30px;
+
+            PreviewButtonSave {}
+
+            PreviewButtonCopy {}
+        }
+    }
+
+    if !landscape : HorizontalLayout {
+        PreviewImage {
+            source: preview;
+        }
+
+        VerticalLayout {
+            padding: 30px;
+            spacing: 30px;
+
+            PreviewButtonSave {}
+
+            PreviewButtonCopy {}
+        }
+    }
+}

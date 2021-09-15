@@ -10,7 +10,8 @@ build = "build.rs"
 [dependencies]
 sixtyfps = "0.1.2"
 x11cap = "0.4.1"
-hacksaw = { path = "libs/hacksaw" }
+hacksaw-x11rb = "1.0.5"
+arboard = "2.0.0"
 
 [build-dependencies]
 sixtyfps-build = "0.1.2"

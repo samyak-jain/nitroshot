@@ -1,6 +1,6 @@
 use hacksaw::HackSawConfig;
 
-pub fn select_screen() {
+pub fn select_screen() -> String {
     let config = HackSawConfig::default();
-    hacksaw::launch_default(Some(config), false).unwrap();
+    let hacksaw_result = hacksaw::make_selection(Some(config)).unwrap();
 }
