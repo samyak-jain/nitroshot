@@ -1,0 +1,168 @@
+import { PushButton } from "./components/main_button.60";
+
+export global AppState := {
+    callback start-recording;
+    callback take-screenshot;
+
+    property <int> delay;
+    property <int> capture-type: -1;
+
+    property <bool> window-selected: false;
+    property <bool> screen-selected: false;
+    property <bool> selection-selected: false;
+}
+
+export StartLayout := VerticalLayout {
+    alignment: space-around;
+    padding: 30px;
+    spacing: 20px;
+
+    HorizontalLayout {
+        vertical-stretch: 1;
+        max-height: 40px;
+        spacing: 20px;
+
+        PushButton {
+          text: "Take Screenshot";
+          pushcolor: white;
+          pressed_color: #3498DB;
+          base_color: #22A7F0;
+          clicked => { AppState.take-screenshot }
+        }
+
+        PushButton {
+          text: "Start Recording";
+          pushcolor: white;
+          pressed_color: #C31300;
+          base_color: #D91500;
+          clicked => { AppState.start-recording }
+        }
+    }
+
+    HorizontalLayout {
+        vertical-stretch: 1;
+        min-height: 50px;
+        max-height: 70px;
+        spacing: 20px;
+
+        PushButton {
+            vertical-padding: 10px;
+            text: "Selection";
+            icon: @image-url("./icons/selection.svg");
+            pushcolor: white;
+            selected: AppState.selection-selected;
+            pressed_color: #323F4D;
+            base_color: #28303D;
+            clicked => { 
+                if (AppState.capture-type == 0) {
+                    AppState.selection-selected = false;
+                    AppState.capture-type = -1;
+                } else {
+                    AppState.selection-selected = true;
+                    AppState.capture-type = 0;
+                }
+                AppState.window-selected = false;
+                AppState.screen-selected = false;
+            }
+        }
+
+        PushButton {
+            vertical-padding: 10px;
+            text: "Screen";
+            icon: @image-url("./icons/screen.svg");
+            pushcolor: white;
+            selected: AppState.screen-selected;
+            pressed_color: #323F4D;
+            base_color: #28303D;
+            clicked => { 
+                if (AppState.capture-type == 1) {
+                    AppState.screen-selected = false;
+                    AppState.capture-type = -1;
+                } else {
+                    AppState.screen-selected = true;
+                    AppState.capture-type = 1;
+                }
+                AppState.window-selected = false;
+                AppState.selection-selected = false;
+            }
+        }
+
+        PushButton {
+            vertical-padding: 10px;
+            text: "Window";
+            icon: @image-url("./icons/window.svg");
+            pushcolor: white;
+            selected: AppState.window-selected;
+            pressed_color: #323F4D;
+            base_color: #28303D;
+            clicked => { 
+                if (AppState.capture-type == 2) {
+                    AppState.window-selected = false;
+                    AppState.capture-type = -1;
+                } else {
+                    AppState.window-selected = true;
+                    AppState.capture-type = 2;
+                }
+                AppState.screen-selected = false;
+                AppState.selection-selected = false;
+            }
+        }
+    }
+
+    HorizontalLayout {
+        vertical-stretch: 1;
+        min-height: 30px;
+        max-height: 40px;
+
+        Rectangle {
+            border-radius: 5px;
+            border-width: 1px;
+            border-color: white;
+
+            HorizontalLayout {
+                padding-left: 20px;
+                padding-right: 20px;
+
+                Text {
+                    text: "Delay in seconds: ";
+                    vertical-alignment: TextVerticalAlignment.center;
+                    color: white;
+                }
+
+                HorizontalLayout {
+                    spacing: 20px;
+
+                    PushButton {
+                        max-width: 15px;
+                        text: "-";
+                        pushcolor: white;
+                        clicked => { 
+                            if (AppState.delay > 0) {
+                                AppState.delay -= 1 
+                            }
+                        }
+                    }
+
+                    Text {
+                        max-width: 15px;
+                        text: AppState.delay;
+                        vertical-alignment: TextVerticalAlignment.center;
+                        horizontal-alignment: TextHorizontalAlignment.center;
+                        color: white;
+                    }
+
+                    PushButton {
+                        max-width: 15px;
+                        text: "+";
+                        pushcolor: white;
+                        clicked => { 
+                            if (AppState.delay < 21) {
+                                AppState.delay += 1 
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
