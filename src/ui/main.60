@@ -1,6 +1,8 @@
 import { SpinBox, Button, CheckBox, Slider, GroupBox } from "sixtyfps_widgets.60";
-import { StartLayout } from "start.60";
+import { AppState, StartLayout } from "start.60";
 import { PreviewLayout } from "preview.60";
+
+export { AppState }
 
 export MainWindow := Window {
     property <int> active-page: 0;
