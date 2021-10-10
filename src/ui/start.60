@@ -27,7 +27,7 @@ export StartLayout := VerticalLayout {
           pushcolor: white;
           pressed_color: #3498DB;
           base_color: #22A7F0;
-          clicked => { AppState.take-screenshot }
+          clicked => { AppState.take-screenshot() }
         }
 
         PushButton {
@@ -35,7 +35,7 @@ export StartLayout := VerticalLayout {
           pushcolor: white;
           pressed_color: #C31300;
           base_color: #D91500;
-          clicked => { AppState.start-recording }
+          clicked => { AppState.start-recording() }
         }
     }
 
